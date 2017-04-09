@@ -12,7 +12,10 @@
 #ifndef RESPEQTSETTINGS_H
 #define RESPEQTSETTINGS_H
 
+#include "mainwindow.h"
+
 #include <QSettings>
+#include <QPrinterInfo>
 
 
 #define NUM_RECENT_FILES 10
@@ -24,6 +27,11 @@ public:
     public:
         QString fileName;
         bool isWriteProtected;
+    };
+    class PrinterSettings {
+    public:
+        QString printerName;
+        int printerType;
     };
 
     RespeqtSettings();
@@ -210,6 +218,13 @@ public:
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
 
+// Methods for setting and getting the Printer emulation settings.
+    void setPrinterType(int no, int printerType);
+    int printerType(int no) const;
+    void setConnectedPrinterName(int no, const QString &printerInfo);
+    const QString &connectedPrinterName(int no) const;
+    const PrinterSettings &connectedPrinterSettings(int no) const;
+
 private:
     QSettings *mSettings;
 
@@ -264,6 +279,7 @@ private:
     int mCustomCasBaud;
 
     ImageSettings mMountedImageSettings[16];    //
+    PrinterSettings mConnectedPrinterSettings[PRINTER_COUNT];
 
     ImageSettings mRecentImageSettings[NUM_RECENT_FILES];
     QString mLastDiskImageDir;

@@ -34,28 +34,12 @@
 #include "network.h"
 #include "drivewidget.h"
 #include "infowidget.h"
+#include "printerwidget.h"
 
 namespace Ui
 {
     class MainWindow;
 }
-class DiskWidget
-{
-public:
-    QLabel *fileNameLabel;
-    QLabel *imagePropertiesLabel;
-    QAction *saveAction;
-    QAction *autoSaveAction;        //
-    QAction *bootOptionAction;      //
-    QAction *saveAsAction;
-    QAction *revertAction;
-    QAction *mountDiskAction;
-    QAction *mountFolderAction;
-    QAction *ejectAction;
-    QAction *writeProtectAction;
-    QAction *editAction;
-    QFrame *frame;
-};
 
 class MainWindow : public QMainWindow
 {
@@ -67,6 +51,8 @@ public:
     QString g_sessionFile;
     QString g_sessionFilePath;
     QString g_mainWindowTitle;
+    static MainWindow *getInstance() { return instance; }
+    TextPrinterWindow *getTextPrinterWindow() { return textPrinterWindow; }
 
 public slots:
     void show();
@@ -80,6 +66,7 @@ private:
     Ui::MainWindow *ui;
     SioWorker *sio;
     bool shownFirstTime;
+    PrinterWidget* printerWidgets[PRINTER_COUNT]; //
     DriveWidget* diskWidgets[DISK_COUNT];    //
     InfoWidget* infoWidget;
 
@@ -92,13 +79,14 @@ private:
     Qt::WindowStates oldWindowStates;
     QString lastMessage;
     int lastMessageRepeat;
+    static MainWindow *instance;
+    
     bool isClosing;
 
     QDialog *logWindow_;
 
 
     QList<QAction*> recentFilesActions_;
-
 
     void setSession();  //
     void updateRecentFileActions();
@@ -117,7 +105,6 @@ private:
     void loadTranslators();
     void autoSaveDisk(int no);                                              //
     void setUpPrinterEmulationWidgets(bool enabled);
-
 
     void createDeviceWidgets();
 

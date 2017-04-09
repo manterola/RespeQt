@@ -4,34 +4,37 @@
 #include "baseprinter.h"
 #include "sioworker.h"
 
-class NativePrinterSupport : public BasePrinter
-{
-    Q_OBJECT
-public:
-    NativePrinterSupport(SioWorker *sio);
-    virtual ~NativePrinterSupport();
+namespace Printers {
 
-    virtual bool requiresNativePrinter() const { return true; }
-    virtual QPrinter *nativePrinter() const { return mNativePrinter; }
+    class NativePrinterSupport : public BasePrinter
+    {
+        Q_OBJECT
+    public:
+        NativePrinterSupport(SioWorker *sio);
+        virtual ~NativePrinterSupport();
 
-    virtual bool handleBuffer(QByteArray &buffer, int len);
-    virtual void beginPrint();
-    virtual void endPrint();
+        virtual bool requiresNativePrinter() const { return true; }
+        virtual QPrinter *nativePrinter() const { return mNativePrinter; }
+
+        virtual bool handleBuffer(QByteArray &buffer, int len);
+        virtual void beginPrint();
+        virtual void endPrint();
 
 
-protected:
-    QPainter *mPainter;
+    protected:
+        QPainter *mPainter;
 
-    QFont mFont;
-    int x, y;
-    QRect mBoundingBox;
-    QFontMetrics *mFontMetrics;
-    QPrinter *mNativePrinter;
+        QFont mFont;
+        int x, y;
+        QRect mBoundingBox;
+        QFontMetrics *mFontMetrics;
+        QPrinter *mNativePrinter;
 
-    // This should be static methods, because they are called
-    // from the constructor
-    void setupFont() {}
-    void setupPrinter();
-};
+        // This should be static methods, because they are called
+        // from the constructor
+        void setupFont() {}
+        void setupPrinter();
+    };
 
+}
 #endif // NATIVEPRINTERSUPPORT_H

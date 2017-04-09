@@ -8,21 +8,24 @@
 #include <QPrinter>
 #include <QRect>
 
-class Atari1027 : public AtariPrinter
-{
-    Q_OBJECT
-public:
-    Atari1027(SioWorker *worker);
+namespace Printers {
 
-    virtual void setupFont();
+    class Atari1027 : public AtariPrinter
+    {
+        Q_OBJECT
+    public:
+        Atari1027(SioWorker *worker);
 
-private:
-    int m_lastOperation;
-    bool mESC;
+        virtual void setupFont();
 
-    virtual bool handleBuffer(QByteArray &buffer, int len);
-    bool handleEscapedCodes(const char b);
-    bool handlePrintableCodes(const char b);
-};
+    private:
+        int m_lastOperation;
+        bool mESC;
 
+        virtual bool handleBuffer(QByteArray &buffer, int len);
+        bool handleEscapedCodes(const char b);
+        bool handlePrintableCodes(const char b);
+    };
+
+}
 #endif // ATARI1027_H

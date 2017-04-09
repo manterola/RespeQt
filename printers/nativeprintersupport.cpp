@@ -1,51 +1,55 @@
 #include "nativeprintersupport.h"
 
-NativePrinterSupport::NativePrinterSupport(SioWorker *sio)
-    : BasePrinter(sio),
-      mPainter(NULL),
-      mFontMetrics(NULL)
-{
-    setupPrinter();
-    setupFont();
-}
+namespace Printers {
 
-NativePrinterSupport::~NativePrinterSupport()
-{
-    if (requiresNativePrinter())
+    NativePrinterSupport::NativePrinterSupport(SioWorker *sio)
+        : BasePrinter(sio),
+          mPainter(NULL),
+          mFontMetrics(NULL)
     {
-        endPrint();
+        setupPrinter();
+        setupFont();
     }
-}
 
-void NativePrinterSupport::setupPrinter() {
-    mNativePrinter = new QPrinter();
-    mPainter = new QPainter();
-}
-
-bool NativePrinterSupport::handleBuffer(QByteArray & /*buffer*/, int /*len*/)
-{
-    if (!mPrinting)
+    NativePrinterSupport::~NativePrinterSupport()
     {
-        mPrinting = true;
-        beginPrint();
+        if (requiresNativePrinter())
+        {
+            endPrint();
+        }
     }
-    return true;
-}
 
-void NativePrinterSupport::beginPrint() {
-    if (mPrinting)
-    {
-        mPainter->begin(mNativePrinter);
-        mPainter->setFont(mFont);
-        mBoundingBox = mNativePrinter->pageRect();
-        x = mBoundingBox.left();
-        y = mBoundingBox.top() + mFontMetrics->lineSpacing();
+    void NativePrinterSupport::setupPrinter() {
+        mNativePrinter = new QPrinter();
+        mPainter = new QPainter();
     }
-}
 
-void NativePrinterSupport::endPrint() {
-    if (mPainter->isActive())
+    bool NativePrinterSupport::handleBuffer(QByteArray & /*buffer*/, int /*len*/)
     {
-        mPainter->end();
+        if (!mPrinting)
+        {
+            mPrinting = true;
+            beginPrint();
+        }
+        return true;
     }
+
+    void NativePrinterSupport::beginPrint() {
+        if (mPrinting)
+        {
+            mPainter->begin(mNativePrinter);
+            mPainter->setFont(mFont);
+            mBoundingBox = mNativePrinter->pageRect();
+            x = mBoundingBox.left();
+            y = mBoundingBox.top() + mFontMetrics->lineSpacing();
+        }
+    }
+
+    void NativePrinterSupport::endPrint() {
+        if (mPainter->isActive())
+        {
+            mPainter->end();
+        }
+    }
+
 }

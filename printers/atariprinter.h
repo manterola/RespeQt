@@ -5,19 +5,22 @@
 #include "atasciiinternational.h"
 #include "sioworker.h"
 
-class AtariPrinter : public NativePrinterSupport
-{
-    Q_OBJECT
-public:
-    AtariPrinter(SioWorker *worker);
+namespace Printers {
 
-    bool internationalMode() const { return mInternational; }
-    void setInternationalMode(bool internationalMode) { mInternational = internationalMode; }
+    class AtariPrinter : public NativePrinterSupport
+    {
+        Q_OBJECT
+    public:
+        AtariPrinter(SioWorker *worker);
 
-    virtual const QChar translateAtascii(const char b);
-protected:
-    bool mInternational;
-    AtasciiInternational mAtasciiInternational;
-};
+        bool internationalMode() const { return mInternational; }
+        void setInternationalMode(bool internationalMode) { mInternational = internationalMode; }
 
+        virtual const QChar translateAtascii(const char b);
+    protected:
+        bool mInternational;
+        AtasciiInternational mAtasciiInternational;
+    };
+
+}
 #endif // ATARIPRINTER_H

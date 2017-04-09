@@ -27,8 +27,8 @@ void PrinterWidget::setup()
 
     ui->atariPrinters->clear();
     std::map<QString, int> list;
-    for (int i = 1; i <= 5; i++) {
-        BasePrinter *printer = BasePrinter::createPrinter(i, NULL);
+    for (int i = 1; i <= Printers::BasePrinter::NUM_KNOWN_PRINTERS; i++) {
+        Printers::BasePrinter *printer = Printers::BasePrinter::createPrinter(i, NULL);
         list[printer->typeName()] = printer->typeId();
         delete printer;
     }
@@ -64,13 +64,14 @@ void PrinterWidget::on_atariPrinters_currentIndexChanged(int index)
     // If we select a new printer, end the printing job of the old printer
     if (mPrinter && mPrinter->requiresNativePrinter())
     {
-        NativePrinterSupport *nativePrinter = dynamic_cast<NativePrinterSupport*>(mPrinter);
+        Printers::NativePrinterSupport *nativePrinter = dynamic_cast<Printers::NativePrinterSupport*>(mPrinter);
         nativePrinter->endPrint();
     }
     if (mSio) {
        // Create a new Atari printer device and install it.
        int typeId = ui->atariPrinters->itemData(index).toInt();
-       BasePrinter *newPrinter = BasePrinter::createPrinter(typeId, mSio);
+       Printers::BasePrinter *newPrinter
+               = Printers::BasePrinter::createPrinter(typeId, mSio);
        mSio->installDevice(PRINTER_BASE_CDEVIC + printerNo_, newPrinter);
        mPrinter = newPrinter;
 
@@ -92,7 +93,8 @@ void PrinterWidget::on_buttonConnectPrinter_triggered(QAction * /*arg1*/)
 {
     if (mPrinter && mPrinter->requiresNativePrinter())
     {
-        NativePrinterSupport *nativePrinter = dynamic_cast<NativePrinterSupport*>(mPrinter);
+        Printers::NativePrinterSupport *nativePrinter
+                = dynamic_cast<Printers::NativePrinterSupport*>(mPrinter);
         QPrintDialog dialog(nativePrinter->nativePrinter());
         if (dialog.exec() == QDialog::Accepted)
         {
@@ -109,7 +111,8 @@ void PrinterWidget::on_buttonDisconnectPrinter_triggered(QAction * /*arg1*/)
 {
     if (mPrinter && mPrinter->requiresNativePrinter())
     {
-        NativePrinterSupport *nativePrinter = dynamic_cast<NativePrinterSupport*>(mPrinter);
+        Printers::NativePrinterSupport *nativePrinter
+                = dynamic_cast<Printers::NativePrinterSupport*>(mPrinter);
         nativePrinter->endPrint();
         ui->actionConnectPrinter->setEnabled(nativePrinter->requiresNativePrinter());
         ui->actionDisconnectPrinter->setEnabled(false);

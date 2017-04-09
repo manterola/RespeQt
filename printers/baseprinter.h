@@ -12,41 +12,47 @@
 #include <QFont>
 #include <QFontMetrics>
 
-class BasePrinter : public SioDevice
-{
-    Q_OBJECT
-public:
-    BasePrinter(SioWorker *worker);
-    virtual ~BasePrinter();
+namespace Printers {
 
-    int typeId() const { return mTypeId; }
-    const QString &typeName() const { return mTypeName; }
-    virtual bool requiresNativePrinter() const { return false; }
+    class BasePrinter : public SioDevice
+    {
+        Q_OBJECT
+    public:
+        BasePrinter(SioWorker *worker);
+        virtual ~BasePrinter();
 
-    virtual void handleCommand(quint8 command, quint16 aux);
-    virtual bool handleBuffer(QByteArray &buffer, int len) = 0;
+        int typeId() const { return mTypeId; }
+        const QString &typeName() const { return mTypeName; }
+        virtual bool requiresNativePrinter() const { return false; }
 
-    virtual const QChar translateAtascii(const char b);
+        virtual void handleCommand(quint8 command, quint16 aux);
+        virtual bool handleBuffer(QByteArray &buffer, int len) = 0;
 
-    // create a printer object of specified type
-    static BasePrinter *createPrinter(int type, SioWorker *worker);
+        virtual const QChar translateAtascii(const char b);
 
-protected:
-    int mTypeId;
-    QString mTypeName;
+        // create a printer object of specified type
+        static BasePrinter *createPrinter(int type, SioWorker *worker);
 
-    Atascii mAtascii;
+        // How many printers are to be shown
+        static const int NUM_KNOWN_PRINTERS = 3;
 
-    static const int TEXTPRINTER = 1;
-    static const int ATARI1027 = 2;
-    static const int ATARI1020 = 3;
-    static const int NECP6 = 4;
-    static const int EPSONFX80 = 5;
+    protected:
+        int mTypeId;
+        QString mTypeName;
 
-    bool mPrinting;
+        Atascii mAtascii;
 
-private:
-    int m_lastOperation;
-};
+        static const int TEXTPRINTER = 1;
+        static const int ATARI1027 = 2;
+        static const int ATARI1020 = 3;
+        static const int EPSONFX80 = 4;
+        static const int NECP6 = 5;
+
+        bool mPrinting;
+
+    private:
+        int m_lastOperation;
+    };
+}
 
 #endif // BASEPRINTER_H

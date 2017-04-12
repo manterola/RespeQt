@@ -1,13 +1,13 @@
 #ifndef ATARIPRINTER_H
 #define ATARIPRINTER_H
 
-#include "nativeprintersupport.h"
+#include "nativeprinter.h"
 #include "atasciiinternational.h"
 #include "sioworker.h"
 
 namespace Printers {
 
-    class AtariPrinter : public NativePrinterSupport
+    class AtariPrinter : public NativePrinter
     {
         Q_OBJECT
     public:

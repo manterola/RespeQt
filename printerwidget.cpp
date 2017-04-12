@@ -1,7 +1,7 @@
 #include "printerwidget.h"
 #include "ui_printerwidget.h"
 #include "respeqtsettings.h"
-#include "printers/nativeprintersupport.h"
+#include "printers/nativeprinter.h"
 
 #include <QPrintDialog>
 
@@ -64,7 +64,7 @@ void PrinterWidget::on_atariPrinters_currentIndexChanged(int index)
     // If we select a new printer, end the printing job of the old printer
     if (mPrinter && mPrinter->requiresNativePrinter())
     {
-        Printers::NativePrinterSupport *nativePrinter = dynamic_cast<Printers::NativePrinterSupport*>(mPrinter);
+        Printers::NativePrinter *nativePrinter = dynamic_cast<Printers::NativePrinter*>(mPrinter);
         nativePrinter->endPrint();
     }
     if (mSio) {
@@ -93,8 +93,8 @@ void PrinterWidget::on_buttonConnectPrinter_triggered(QAction * /*arg1*/)
 {
     if (mPrinter && mPrinter->requiresNativePrinter())
     {
-        Printers::NativePrinterSupport *nativePrinter
-                = dynamic_cast<Printers::NativePrinterSupport*>(mPrinter);
+        Printers::NativePrinter *nativePrinter
+                = dynamic_cast<Printers::NativePrinter*>(mPrinter);
         QPrintDialog dialog(nativePrinter->nativePrinter());
         if (dialog.exec() == QDialog::Accepted)
         {
@@ -111,8 +111,8 @@ void PrinterWidget::on_buttonDisconnectPrinter_triggered(QAction * /*arg1*/)
 {
     if (mPrinter && mPrinter->requiresNativePrinter())
     {
-        Printers::NativePrinterSupport *nativePrinter
-                = dynamic_cast<Printers::NativePrinterSupport*>(mPrinter);
+        Printers::NativePrinter *nativePrinter
+                = dynamic_cast<Printers::NativePrinter*>(mPrinter);
         nativePrinter->endPrint();
         ui->actionConnectPrinter->setEnabled(nativePrinter->requiresNativePrinter());
         ui->actionDisconnectPrinter->setEnabled(false);

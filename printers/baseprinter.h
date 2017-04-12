@@ -45,8 +45,9 @@ namespace Printers {
         static const int TEXTPRINTER = 1;
         static const int ATARI1027 = 2;
         static const int ATARI1020 = 3;
-        static const int EPSONFX80 = 4;
-        static const int NECP6 = 5;
+        static const int ATARI1029 = 4;
+        static const int ESCP = -1;
+        static const int NECP6 = -2;
 
         bool mPrinting;
 

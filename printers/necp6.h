@@ -1,12 +1,11 @@
 #ifndef NECP6_H
 #define NECP6_H
 
-#include "sioworker.h"
-#include "nativeprintersupport.h"
+#include "centronics.h"
 
 namespace Printers {
 
-    class NecP6 : public NativePrinterSupport
+    class NecP6 : public Centronics
     {
     public:
         NecP6(SioWorker *sio);

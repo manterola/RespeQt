@@ -1,8 +1,8 @@
-#include "nativeprintersupport.h"
+#include "nativeprinter.h"
 
 namespace Printers {
 
-    NativePrinterSupport::NativePrinterSupport(SioWorker *sio)
+    NativePrinter::NativePrinter(SioWorker *sio)
         : BasePrinter(sio),
           mPainter(NULL),
           mFontMetrics(NULL)
@@ -11,7 +11,7 @@ namespace Printers {
         setupFont();
     }
 
-    NativePrinterSupport::~NativePrinterSupport()
+    NativePrinter::~NativePrinter()
     {
         if (requiresNativePrinter())
         {
@@ -19,12 +19,12 @@ namespace Printers {
         }
     }
 
-    void NativePrinterSupport::setupPrinter() {
+    void NativePrinter::setupPrinter() {
         mNativePrinter = new QPrinter();
         mPainter = new QPainter();
     }
 
-    bool NativePrinterSupport::handleBuffer(QByteArray & /*buffer*/, int /*len*/)
+    bool NativePrinter::handleBuffer(QByteArray & /*buffer*/, int /*len*/)
     {
         if (!mPrinting)
         {
@@ -34,7 +34,7 @@ namespace Printers {
         return true;
     }
 
-    void NativePrinterSupport::beginPrint() {
+    void NativePrinter::beginPrint() {
         if (mPrinting)
         {
             mPainter->begin(mNativePrinter);
@@ -45,7 +45,7 @@ namespace Printers {
         }
     }
 
-    void NativePrinterSupport::endPrint() {
+    void NativePrinter::endPrint() {
         if (mPainter->isActive())
         {
             mPainter->end();

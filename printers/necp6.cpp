@@ -3,7 +3,7 @@
 namespace Printers {
 
     NecP6::NecP6(SioWorker *sio)
-        : NativePrinterSupport(sio)
+        : Centronics(sio)
     {
         mTypeId = NECP6;
         mTypeName = QString("Nec P6");

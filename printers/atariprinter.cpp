@@ -3,7 +3,7 @@
 namespace Printers {
 
     AtariPrinter::AtariPrinter(SioWorker *worker)
-        :NativePrinterSupport(worker),
+        :NativePrinter(worker),
         mInternational(false)
     {}
 
@@ -12,7 +12,7 @@ namespace Printers {
         if (internationalMode()) {
             return mAtasciiInternational(b);
         }
-        return NativePrinterSupport::translateAtascii(b);
+        return NativePrinter::translateAtascii(b);
     }
 
 }

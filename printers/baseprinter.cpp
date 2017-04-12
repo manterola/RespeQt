@@ -2,8 +2,9 @@
 #include "textprinter.h"
 #include "atari1027.h"
 #include "atari1020.h"
+#include "atari1029.h"
 #include "necp6.h"
-#include "epsonfx80.h"
+#include "escp.h"
 #include "respeqtsettings.h"
 #include "logdisplaydialog.h"
 
@@ -31,10 +32,12 @@ namespace Printers {
                 return new Atari1027(worker);
             case ATARI1020:
                 return new Atari1020(worker);
+            case ATARI1029:
+                return new Atari1029(worker);
             case NECP6:
                 return new NecP6(worker);
-            case EPSONFX80:
-                return new EpsonFX80(worker);
+            case ESCP:
+                return new EscP(worker);
             default:
                 throw new std::invalid_argument("Unknown printer type");
         }

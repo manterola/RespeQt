@@ -6,12 +6,12 @@
 
 namespace Printers {
 
-    class NativePrinterSupport : public BasePrinter
+    class NativePrinter : public BasePrinter
     {
         Q_OBJECT
     public:
-        NativePrinterSupport(SioWorker *sio);
-        virtual ~NativePrinterSupport();
+        NativePrinter(SioWorker *sio);
+        virtual ~NativePrinter();
 
         virtual bool requiresNativePrinter() const { return true; }
         virtual QPrinter *nativePrinter() const { return mNativePrinter; }

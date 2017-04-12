@@ -51,10 +51,12 @@ SOURCES += main.cpp \
     printerwidget.cpp \
     atasciiinternational.cpp \
     printers/atariprinter.cpp \
-    printers/nativeprintersupport.cpp \
     printers/atari1020.cpp \
     printers/necp6.cpp \
-    printers/epsonfx80.cpp
+    printers/escp.cpp \
+    printers/atari1029.cpp \
+    printers/centronics.cpp \
+    printers/nativeprinter.cpp
 win32:LIBS += -lwinmm -lz
 unix:LIBS += -lz
 win32:SOURCES += serialport-win32.cpp
@@ -92,10 +94,12 @@ HEADERS += mainwindow.h \
     printerwidget.h \
     atasciiinternational.h \
     printers/atariprinter.h \
-    printers/nativeprintersupport.h \
     printers/atari1020.h \
     printers/necp6.h \
-    printers/epsonfx80.h
+    printers/escp.h \
+    printers/atari1029.h \
+    printers/centronics.h \
+    printers/nativeprinter.h
 win32:HEADERS += serialport-win32.h
 unix:HEADERS += serialport-unix.h
 FORMS += mainwindow.ui \

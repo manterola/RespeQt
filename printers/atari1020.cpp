@@ -33,7 +33,7 @@ namespace Printers {
 
     void Atari1020::setupPrinter()
     {
-        mPainter->setWindow(QRect(0, -999, 480, 1000));
+        mPainter->setWindow(QRect(0, -999, 480, 2000));
     }
 
     void Atari1020::setupFont()
